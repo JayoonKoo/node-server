@@ -19,11 +19,17 @@ const server = http.createServer((req, res) => {
 	const url = req.url;
 	res.setHeader('Content-Type', 'text/html');
 	if (url === '/') {
-		fs.createReadStream('./index.html').pipe(res);
+		ejs
+			.renderFile('./template/index.ejs', {name})
+			.then(data => res.end(data));
 	} else if (url === '/course') {
-		fs.createReadStream('./course.html').pipe(res);
+		ejs
+			.renderFile('./template/course.ejs', {courses})
+			.then(data => res.end(data));
 	} else {
-		fs.createReadStream('./not-found.html').pipe(res);
+		ejs
+			.renderFile('./template/not-found.ejs', {name})
+			.then(data => res.end(data));
 	}
 })
 
